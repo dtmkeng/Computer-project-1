@@ -1,5 +1,5 @@
 ## Computer project_1 
-#### Create with react 
+#### Create with react.js 
 ```javascript
      this.name = "Phumai"
 ```
