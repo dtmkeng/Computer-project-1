@@ -89,7 +89,7 @@ SignUp(){
             <div className="control">
              <input type="email" 
                      name="email"
-                     value={this.state.email} 
+                     value={this.state.email}
                      className="input" 
                      placeholder='email' 
                      onChange={this.handleChange}/>
