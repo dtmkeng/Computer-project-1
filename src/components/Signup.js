@@ -3,7 +3,18 @@ import classnames from 'classnames';
 import {Link,Redirect} from 'react-router-dom';
 import { auth} from '../help/auth'
 import { ref } from '../config/connect'
-
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux'
+import {UID}from '../action/userAction'
+const mapStateToProp=(state)=>{
+    return{
+       id:state.User.id
+    }
+}
+const mapDispatchToProp=(dispatct)=>{
+  return {Uid:bindActionCreators(UID,dispatct)
+  }
+}
 class SignUp extends React.Component {
   constructor(props) {
     super(props);
@@ -49,9 +60,11 @@ SignUp(){
       username:data.users,
       study:data.study,
     })
-    .then(() => this.setState({done:true}))
-   });
-  
+    return user;
+   }).then((user)=>{
+      //console.log(user.uid);
+      this.props.Uid(user.uid);
+    }).then(()=>this.setState({done:true}))
 }
  handleSubmit(event) {
     event.preventDefault();
@@ -66,7 +79,6 @@ SignUp(){
       this.SignUp();
       
     }
-  
   }
   render() {
     const form =(<div className='body'> 
@@ -131,4 +143,4 @@ SignUp(){
     );
   }
 }
-export default SignUp;
+export default  connect(mapStateToProp,mapDispatchToProp)(SignUp);

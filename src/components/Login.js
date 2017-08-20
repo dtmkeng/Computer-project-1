@@ -2,6 +2,18 @@ import React from 'react';
 import classnames from 'classnames';
 import {Link,Redirect} from 'react-router-dom';
 import * as firebase from 'firebase';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux'
+import {UID}from '../action/userAction'
+const mapStateToProp=(state)=>{
+    return{
+       id:state.User.id
+    }
+}
+const mapDispatchToProp=(dispatct)=>{
+  return {Uid:bindActionCreators(UID,dispatct)
+  }
+}
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
@@ -17,7 +29,7 @@ class LoginPage extends React.Component {
     const email = this.state.email;
     const password = this.state.pass;
     firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-          // Handle Errors here.
+  
           var errorCode = error.code;
           var errorMessage = error.message;
           // [START_EXCLUDE]
@@ -27,8 +39,15 @@ class LoginPage extends React.Component {
             alert(errorMessage);
           }
           console.log(error);
-        });
-        this.setState({done:true});
+        }).then(()=>{
+          var user = firebase.auth().currentUser;
+          if (user) {
+             console.log(user.uid);
+             this.props.Uid(user.uid);
+          } else {
+            // No user is signed in.
+          }
+        }).then(()=>this.setState({done:true}));
   }
   handleChange=(e)=>{
     if (!!this.state.error[e.target.name]) {
@@ -51,6 +70,7 @@ class LoginPage extends React.Component {
     const inVali  = Object.keys(error).length===0
     if(inVali){
       this.SingIn();
+       //this.props.Uid("keng");
       //this.setState({done:true});
     }
   }
@@ -95,4 +115,4 @@ class LoginPage extends React.Component {
     );
   }
 }
-export default LoginPage;
+export default connect(mapStateToProp,mapDispatchToProp)(LoginPage);

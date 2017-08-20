@@ -18,6 +18,7 @@ export default function user(state=initiaSate,action){
            }
         }        
        default:
+       
     }
 return state;
 }

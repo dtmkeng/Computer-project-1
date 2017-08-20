@@ -5,15 +5,13 @@ import App from './App';
 import {BrowserRouter} from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
 import {createStore,applyMiddleware} from 'redux'
-import {composeWithDevTools} from 'redux-devtools-extension'
 import rootReducer from './rootReducer'
-import {thunk} from 'redux-thunk'
 import { Provider } from 'react-redux'
-const mylogger = (store) => (next) => (action) => {
-    console.log("Log action", action);
-    next(action);
-}
-const store = createStore(rootReducer, {}, applyMiddleware(mylogger));
+import logger from 'redux-logger';
+import thunk from 'redux-thunk'
+import promise from 'redux-promise-middleware'
+
+const store = createStore(rootReducer, {}, applyMiddleware(promise(),thunk,logger));
 store.subscribe(() => {
     console.log("Udate Store", store.getState());
 });
