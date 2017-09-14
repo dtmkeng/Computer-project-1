@@ -1,3 +1,5 @@
+import {get} from '../config/connect'
+import * as firebase from 'firebase';
 const Instate = {
     name:'',
     email:'',
@@ -16,10 +18,15 @@ export default function User(state=Instate,action){
            break;
         }
         case "GET_DATA":{
-            state={
-                ...state,
-                email:state.email=action.playload
-            }
+            firebase.auth().onAuthStateChanged(function(user) {
+                if (user) {
+                    state={
+                        ...state,
+                        id:state.id=user.uid
+                    }
+                } else {
+                }
+              });
            break;
         }
        default:

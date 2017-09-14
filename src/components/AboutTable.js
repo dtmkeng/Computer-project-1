@@ -41,7 +41,7 @@ class AboutTable extends Component {
     }
     render() {
         return (
-           <div >
+           <div >        
                 AboutTable
             </div>
         );

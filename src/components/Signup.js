@@ -68,6 +68,8 @@ SignUp(){
 }
  handleSubmit(event) {
     event.preventDefault();
+
+    
     let error={};
     if(this.state.user==='')error.user = "Don't have data";
     if(this.state.pass==='')error.pass = "Don't have data";

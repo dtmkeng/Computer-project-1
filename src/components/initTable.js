@@ -53,7 +53,7 @@ componentDidMount(){
             var data =snap.val();
             return data;
         }).then((data)=>{
-            this.props.GETdata(data.email);
+            this.props.GETdata();
         });
             //console.log(this.state.email)
            p=[];
